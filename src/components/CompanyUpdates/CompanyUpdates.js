@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import "./CompanyUpdates.css";
@@ -6,11 +6,22 @@ import "./CompanyUpdates.css";
 export default function CompanyUpdates({ items = [] }) {
   const navigate = useNavigate();
   const { t } = useLanguage();
+  const trackRef = useRef(null);
 
   if (!items.length) return null;
 
   // Duplicate items for seamless scroll
   const scrollItems = [...items, ...items];
+
+  const scroll = (direction) => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    el.scrollBy({
+      left: direction === "left" ? -320 : 320,
+      behavior: "smooth",
+    });
+  };
 
   return (
     <section className="companySection">
@@ -20,7 +31,17 @@ export default function CompanyUpdates({ items = [] }) {
       </div>
 
       <div className="companyScrollWrapper">
-        <div className="companyScrollTrack">
+        {/* LEFT ARROW */}
+        <button
+          className="companyArrow left"
+          onClick={() => scroll("left")}
+          aria-label="Scroll left"
+        >
+          ‹
+        </button>
+
+        {/* SCROLL TRACK */}
+        <div className="companyScrollTrack" ref={trackRef}>
           {scrollItems.map((p, idx) => (
             <article
               key={`${p.id}-${idx}`}
@@ -40,6 +61,15 @@ export default function CompanyUpdates({ items = [] }) {
             </article>
           ))}
         </div>
+
+        {/* RIGHT ARROW */}
+        <button
+          className="companyArrow right"
+          onClick={() => scroll("right")}
+          aria-label="Scroll right"
+        >
+          ›
+        </button>
       </div>
     </section>
   );
