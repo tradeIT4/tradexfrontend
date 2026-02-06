@@ -21,30 +21,24 @@
   line-height: 1.4;
 }
 
-/* ===== Scroll Wrapper ===== */
 .videoMarquee {
-  position: relative;
   width: 100%;
+  overflow: hidden;
+  position: relative;
 }
 
-/* ===== Scroll Track ===== */
+/* pixel-based animation avoids disappearing on mobile */
 .videoTrack {
   display: flex;
   gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 6px 44px;
+  width: fit-content;
+  animation: videoScrollLinear 60s linear infinite;
 }
 
-/* Hide scrollbar */
-.videoTrack::-webkit-scrollbar {
-  display: none;
-}
-.videoTrack {
-  scrollbar-width: none;
+.videoMarquee:hover .videoTrack {
+  animation-play-state: paused;
 }
 
-/* ===== Video Card ===== */
 .videoItem {
   position: relative;
   flex: 0 0 auto;
@@ -60,13 +54,14 @@
 
 .videoItem:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.20);
 }
 
 .videoItem img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
 .videoTitleOverlay {
@@ -86,72 +81,24 @@
   font-size: 12px;
   font-weight: 900;
   line-height: 1.3;
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* ===== Arrow Buttons ===== */
-.scrollBtn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  background: rgba(0, 0, 0, 0.65);
-  color: #fff;
-  font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@keyframes videoScrollLinear {
+  from { transform: translateX(0); }
+  to { transform: translateX(-1200px); }
 }
 
-.scrollBtn.left {
-  left: 6px;
-}
-
-.scrollBtn.right {
-  right: 6px;
-}
-
-.scrollBtn:hover {
-  background: rgba(0, 0, 0, 0.85);
-}.videoTrack {
-  display: flex;
-  gap: 16px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 6px 44px;
-}
-
-.videoTrack::-webkit-scrollbar {
-  display: none;
-}
-.videoTrack {
-  scrollbar-width: none;
-}
-
-
-/* ===== Responsive ===== */
 @media (max-width: 1024px) {
-  .videoItem {
-    width: 240px;
-  }
+  .videoItem { width: 240px; }
+  .videoTrack { animation-duration: 70s; }
 }
 
 @media (max-width: 600px) {
-  .videoItem {
-    width: 200px;
-  }
-
-  .scrollBtn {
-    width: 32px;
-    height: 32px;
-    font-size: 18px;
-  }
+  .videoItem { width: 200px; }
+  .videoTrack { animation-duration: 85s; }
 }
