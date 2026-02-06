@@ -14,9 +14,8 @@
   line-height: 1.4;
 }
 
-/* Scroll Wrapper */
+/* Wrapper */
 .companyScrollWrapper {
-  overflow: hidden;
   position: relative;
   width: 100%;
 }
@@ -25,16 +24,20 @@
 .companyScrollTrack {
   display: flex;
   gap: 18px;
-  animation: scrollLeftToRight 20s linear infinite;
-  padding: 6px 44px; /* space for arrows */
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 6px 44px;
 }
 
-/* Pause animation when hovering (UX boost) */
-.companyScrollWrapper:hover .companyScrollTrack {
-  animation-play-state: paused;
+/* Hide scrollbar */
+.companyScrollTrack::-webkit-scrollbar {
+  display: none;
+}
+.companyScrollTrack {
+  scrollbar-width: none;
 }
 
-/* Card styling */
+/* Card */
 .companyCard {
   min-width: 300px;
   flex-shrink: 0;
@@ -71,7 +74,6 @@
   font-size: 14px;
   font-weight: 900;
   color: var(--text);
-  line-height: 1.35;
 }
 
 .companyDesc {
@@ -79,7 +81,6 @@
   font-size: 13px;
   font-weight: 700;
   color: var(--muted);
-  line-height: 1.45;
 }
 
 .companyMeta {
@@ -88,17 +89,7 @@
   color: var(--muted);
 }
 
-/* Auto scroll animation */
-@keyframes scrollLeftToRight {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* ===== ARROWS ===== */
+/* Arrows */
 .companyArrow {
   position: absolute;
   top: 50%;
@@ -129,7 +120,7 @@
   background: rgba(0, 0, 0, 0.85);
 }
 
-/* Responsive tweaks */
+/* Responsive */
 @media (max-width: 900px) {
   .companyCard {
     min-width: 250px;
